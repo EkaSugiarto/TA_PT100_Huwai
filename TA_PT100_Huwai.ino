@@ -29,4 +29,8 @@ void loop() {
   }
 
   DimmerL();
+  if (currentMillis - previousMillis1s >= interval1s) {
+    Serial.println(String(kalibrasiSuhu1) + " , " + String(Suhu2));
+    previousMillis1s = currentMillis;
+  }
 }

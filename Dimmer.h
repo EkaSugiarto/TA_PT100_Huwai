@@ -5,10 +5,13 @@ const int heaterPin = 21;  // pin for heater
 const int coolerPin = 19;  // pin for cooler
 const int fanPin = 32;     // pin for fan
 
-unsigned long previousMillis = 0;  // will store last time the heater/cooler was updated
-const long interval = 500;         // interval at which to turn on/off (milliseconds)
+unsigned long previousMillisssss = 0;  // will store last time the heater/cooler was updated
 
-const int tempSetPoint = 50;  // Desired temperature
+const long heaterInterval = 100;   // Heater on duration (milliseconds)
+const long standbyInterval = 1000; // Standby duration (milliseconds)
+const long coolerInterval = 2000;  // Cooler on duration (milliseconds)
+
+const int tempSetPoint = 50;       // Desired temperature
 
 enum State {
   HEATING,
@@ -49,49 +52,88 @@ void DimmerS() {
 }
 
 void DimmerL() {
+  MAXL();
+
   unsigned long currentMillis = millis();
 
-  MAXL();
+  // Read the current temperature from the sensor (update currentTemperature)
   float currentTemperature = Suhu1;
 
   switch (currentState) {
     case HEATING:
-      if (currentMillis - previousMillis >= interval) {
-        previousMillis = currentMillis;
-        standby();
-        if (currentTemperature < tempSetPoint) {
-          currentState = HEATING;
-          heater();
-        } else {
-          currentState = COOLING;
-        }
+      if (currentMillis - previousMillisssss >= heaterInterval) {
+        previousMillisssss = currentMillis;
+        standby();  // Turn off heater and cooler
+        currentState = STANDBY;
       }
       break;
 
     case COOLING:
-      if (currentMillis - previousMillis >= interval) {
-        previousMillis = currentMillis;
-        standby();
-        if (currentTemperature > tempSetPoint) {
-          currentState = COOLING;
-          cooler();
-        } else {
-          currentState = HEATING;
-        }
+      if (currentMillis - previousMillisssss >= coolerInterval) {
+        previousMillisssss = currentMillis;
+        standby();  // Turn off heater and cooler
+        currentState = STANDBY;
       }
       break;
 
     case STANDBY:
     default:
-      if (currentTemperature < tempSetPoint) {
-        currentState = HEATING;
-        previousMillis = currentMillis;
-        heater();
-      } else if (currentTemperature > tempSetPoint) {
-        currentState = COOLING;
-        previousMillis = currentMillis;
-        cooler();
+      if (currentMillis - previousMillisssss >= standbyInterval) {
+        previousMillisssss = currentMillis;
+        if (currentTemperature < tempSetPoint) {
+          currentState = HEATING;
+          heater();  // Turn on heater for 100 ms
+        } else if (currentTemperature > tempSetPoint) {
+          currentState = COOLING;
+          cooler();  // Turn on cooler for 2000 ms
+        }
       }
       break;
   }
+
+
+  // unsigned long currentMillis = millis();
+
+  // float currentTemperature = Suhu1;
+
+  // switch (currentState) {
+  //   case HEATING:
+  //     if (currentMillis - previousMillisssss >= interval) {
+  //       previousMillisssss = currentMillis;
+  //       standby();
+  //       if (currentTemperature < tempSetPoint) {
+  //         currentState = HEATING;
+  //         heater();
+  //       } else {
+  //         currentState = COOLING;
+  //       }
+  //     }
+  //     break;
+
+  //   case COOLING:
+  //     if (currentMillis - previousMillisssss >= interval) {
+  //       previousMillisssss = currentMillis;
+  //       standby();
+  //       if (currentTemperature > tempSetPoint) {
+  //         currentState = COOLING;
+  //         cooler();
+  //       } else {
+  //         currentState = HEATING;
+  //       }
+  //     }
+  //     break;
+
+  //   case STANDBY:
+  //   default:
+  //     if (currentTemperature < tempSetPoint) {
+  //       currentState = HEATING;
+  //       previousMillisssss = currentMillis;
+  //       heater();
+  //     } else if (currentTemperature > tempSetPoint) {
+  //       currentState = COOLING;
+  //       previousMillisssss = currentMillis;
+  //       cooler();
+  //     }
+  //     break;
+  // }
 }

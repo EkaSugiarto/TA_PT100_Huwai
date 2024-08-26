@@ -12,7 +12,7 @@ const long standbyInterval = 1000;  // Standby duration (milliseconds)
 const long coolerInterval = 10000;   // Cooler on duration (milliseconds)
 
 const int tempSetPoint = 50;  // Desired temperature
-const int hysteresis = 3;     // Temperature buffer to avoid oscillation
+const int hysteresis = -4;     // Temperature buffer to avoid oscillation
 
 enum State {
   HEATING,

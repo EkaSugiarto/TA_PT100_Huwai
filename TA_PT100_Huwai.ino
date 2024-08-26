@@ -21,16 +21,16 @@ void setup() {
 }
 
 void loop() {
-  unsigned long currentMillis = millis();
+  unsigned long currentMillissss = millis();
   
-  if (currentMillis - previousMillis15s >= interval15s) {
-    previousMillis15s = currentMillis;
+  if (currentMillissss - previousMillis15s >= interval15s) {
+    previousMillis15s = currentMillissss;
     // TSL();
   }
 
   DimmerL();
-  if (currentMillis - previousMillis1s >= interval1s) {
+  if (currentMillissss - previousMillis1s >= interval1s) {
     Serial.println(String(kalibrasiSuhu1) + " , " + String(Suhu2));
-    previousMillis1s = currentMillis;
+    previousMillis1s = currentMillissss;
   }
 }

@@ -43,19 +43,10 @@ float MAXL() {
   Suhu1 = thermo1.temperature(RNOMINAL, RREF);
   // Serial.print("T1 = ");
   // Serial.print(" , ");
-  if (kalibrasiSuhu1 >= 20 && kalibrasiSuhu1 <= 100) {
-    Serial.print(kalibrasiSuhu1);
-    Serial.print(" , ");
-  }
 
   uint16_t rtd2 = thermo2.readRTD();
   float ratio2 = rtd2;
   ratio2 /= 32768;
-  if (kalibrasiSuhu1 >= 20 && kalibrasiSuhu1 <= 100) {
-    // Serial.print("T2 = ");
-    Serial.println(thermo2.temperature(RNOMINAL, RREF));
-    // Serial.print(" , ");
-  }
   Suhu2 = thermo2.temperature(RNOMINAL, RREF);
 
   // Serial.println();

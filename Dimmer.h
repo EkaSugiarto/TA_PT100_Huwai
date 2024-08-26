@@ -23,6 +23,7 @@ void heater() {
   digitalWrite(coolerPin, LOW);
   digitalWrite(fanPin, LOW);
   Serial.println("Heater nyala, cooler mati");
+  Serial.println(String(Suhu1) + "  " + String(Suhu2) + "\n\n");
 }
 
 void cooler() {
@@ -30,6 +31,7 @@ void cooler() {
   digitalWrite(coolerPin, HIGH);
   digitalWrite(fanPin, HIGH);
   Serial.println("Heater mati, cooler nyala");
+  Serial.println(String(Suhu1) + "  " + String(Suhu2) + "\n\n");
 }
 
 void standby() {
@@ -37,6 +39,7 @@ void standby() {
   digitalWrite(coolerPin, LOW);
   digitalWrite(fanPin, LOW);
   Serial.println("Standby ... Heater dan cooler mati");
+  Serial.println(String(Suhu1) + "  " + String(Suhu2) + "\n\n");
 }
 
 void DimmerS() {

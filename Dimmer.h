@@ -11,7 +11,7 @@ const long heaterInterval = 50;    // Heater on duration (milliseconds)
 const long standbyInterval = 1000;  // Standby duration (milliseconds)
 const long coolerInterval = 10000;   // Cooler on duration (milliseconds)
 
-const int tempSetPoint = 50;  // Desired temperature
+const int tempSetPoint = 30;  // Desired temperature
 const int hysteresis = 2;     // Temperature buffer to avoid oscillation
 
 enum State {
@@ -26,24 +26,21 @@ void heater() {
   digitalWrite(heaterPin, HIGH);
   digitalWrite(coolerPin, LOW);
   digitalWrite(fanPin, LOW);
-  Serial.println("Heater on, cooler off");
-  Serial.println(String(Suhu1) + "  " + String(Suhu2) + "\n\n");
+  // Serial.println("Heater on, cooler off");
 }
 
 void cooler() {
   digitalWrite(heaterPin, LOW);
   digitalWrite(coolerPin, HIGH);
   digitalWrite(fanPin, HIGH);
-  Serial.println("Heater off, cooler on");
-  Serial.println(String(Suhu1) + "  " + String(Suhu2) + "\n\n");
+  // Serial.println("Heater off, cooler on");
 }
 
 void standby() {
   digitalWrite(heaterPin, LOW);
   digitalWrite(coolerPin, LOW);
   digitalWrite(fanPin, LOW);
-  Serial.println("Standby ... Heater and cooler off");
-  Serial.println(String(Suhu1) + "  " + String(Suhu2) + "\n\n");
+  // Serial.println("Standby ... Heater and cooler off");
 }
 
 void DimmerS() {
@@ -58,7 +55,7 @@ void DimmerL() {
   unsigned long currentMillis = millis();
 
   // Read the current temperature from the sensor (update currentTemperature)
-  float currentTemperature = Suhu1;
+  float currentTemperature = kalibrasiSuhu1;
 
   switch (currentState) {
     case HEATING:
